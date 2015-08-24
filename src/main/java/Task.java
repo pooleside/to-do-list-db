@@ -20,7 +20,8 @@ public class Task {
         return false;
       } else {
         Task newTask = (Task) otherTask;
-        return this.getDescription().equals(newTask.getDescription());
+        return this.getDescription().equals(newTask.getDescription()) &&
+               this.getId() == newTask.getId();
       }
   }
   public static List<Task> all() {
@@ -38,4 +39,14 @@ public class Task {
         .getKey();
     }
   }
+  public static Task find (int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM tasks where id=:id";
+      Task task = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Task.class);
+      return task;
+    }
+  }
+
 }
