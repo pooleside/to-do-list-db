@@ -30,4 +30,11 @@ public class TaskTest {
     Task savedTask = Task.all().get(0);
     assertEquals(myTask.getId(), savedTask.getId());
   }
+  @Test
+  public void find_findsTaskInDatabase_true() {
+    Task myTask = new Task("buy vitamins");
+    myTask.save();
+    Task savedTask = Task.find(myTask.getId());
+    assertTrue(myTask.equals(savedTask));
+    }
 }
